@@ -45,7 +45,7 @@ class ExtractInformation:
             pix = page.get_pixmap(dpi=dpi)
             image_path = os.path.join(output_dir, f"page_{page_num + 1}.png")
             pix.save(image_path)
-        print(f"Saved {len(doc)} pages as images in '{output_dir}' folder.")
+        # print(f"Saved {len(doc)} pages as images in '{output_dir}' folder.")
         return output_dir
     
     def find_table_coordinates(self, folder, padding_ratio=0.05):
@@ -70,9 +70,9 @@ class ExtractInformation:
             for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
                 box = [round(i, 2) for i in box.tolist()]
                 label_text = self.model.config.id2label[label.item()]
-                print(
-                    f"Detected {label_text} with confidence {round(score.item(), 3)} at location {box}"
-                )
+                # print(
+                #     f"Detected {label_text} with confidence {round(score.item(), 3)} at location {box}"
+                # )
 
                 if box:
                     # Apply padding to the box
@@ -104,7 +104,7 @@ class ExtractInformation:
         image = Image.open(image_path)
         cropped_image = image.crop(bbox)
         cropped_image.save(output_path)
-        print("image_saved")
+        # print("image_saved")
         
     def extract_boxes_from_image(self,image_path: str) -> List[Dict]:
         """
@@ -117,13 +117,13 @@ class ExtractInformation:
             List[Dict]: A list of dictionaries with text, position, size, and confidence.
         """
         if not os.path.exists(image_path):
-            print(f"❌ Error: Image file not found at {image_path}")
+            # print(f"❌ Error: Image file not found at {image_path}")
             return []
 
         try:
             img = cv2.imread(image_path)
             if img is None:
-                print("❌ Error: Image could not be loaded.")
+                # print("❌ Error: Image could not be loaded.")
                 return []
 
             # Preprocessing
@@ -151,7 +151,7 @@ class ExtractInformation:
             return results
 
         except Exception as e:
-            print(f"❌ Exception occurred during OCR: {e}")
+            # print(f"❌ Exception occurred during OCR: {e}")
             return []
 
     def encode_image_to_base64(self,image_path: Union[str, Path]) -> str:
@@ -159,7 +159,7 @@ class ExtractInformation:
             return base64.b64encode(img_file.read()).decode('utf-8')
 
     def extract_numerics(self, folder,image_path, text_data): 
-        print("egeger")
+        # print("egeger")
         prompt = f"""
         Align the extracted OCR text with give Financial data table image. Analyze numeric or percentage data column wise.
         Make sure that you are not missing any information in the given table image.
@@ -270,7 +270,7 @@ class ExtractInformation:
         # Check if the file exists before trying to read it
         image_path = os.path.join(folder, image_path)
         if not os.path.exists(image_path):
-            print(f"Error: Image file not found at {image_path}")
+            # print(f"Error: Image file not found at {image_path}")
             return ""  # Return empty string if file not found
         
         img = cv2.imread(image_path)
