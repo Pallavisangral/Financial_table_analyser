@@ -1,5 +1,8 @@
 step1. 
 
+# you need to add key in file Openai_api.py
+self.client = OpenAI(api_key="key")
+
 # make environment
 python -m venv test_env
 
